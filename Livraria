@@ -1,0 +1,689 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
+#include <locale.h>
+#include <string.h>
+#include <conio.h>
+#include <time.h>
+ 
+struct typedef
+{
+    int codigo;
+    char titulo[100];
+    flutuar preco;
+ 
+} LIVRO;
+ 
+struct typedef
+{
+    int cod_venda;
+    int cod_livro;
+    dados de char [11];
+    int quantidade;
+    flutuar valor_total;
+ 
+} VENDA;
+ 
+vazio mostravendas()
+{
+    setlocale(LC_ALL, "Português");
+ 
+    VENDA vendas;
+    int quantidade = 0;
+ 
+ ARQUIVO *pontv;
+    pontv = fopen("vendas.txt", "r");
+ 
+    se (pontv == NULL)
+    {
+        sistema("cls");
+        printf("\n-----------------------------------------------------");
+        printf(\n| ERRO: NENHUMA VENDA REGISTRADA |");
+        printf("\n-----------------------------------------------------");
+        getch();
+    }
+    Mais
+    {
+        sistema("cls");
+        printf("\n-----------------------------------------------------");
+        printf(\n| EXIBIÇÃO DAS VENDAS |");
+        printf("\n-----------------------------------------------------");
+ 
+        fread(&vendas, sizeof(VENDA), 1, pontv);
+        enquanto(! feof(pontv))
+        {
+            printf("\nCÓDIGO DA VENDA: %0,5d",vendas.  cod_venda);
+            printf("\nCÓDIGO DO LIVRO: %0,5d",vendas.  cod_livro);
+            printf("\nQUANTIDADE: %d",vendas.  quantidade);
+            printf("\nDATA DA VENDA: %s",vendas.  dados);
+            printf("\nVALOR DA VENDA: R$%.2f",vendas.  valor_total);
+ 
+            printf("\n-----------------------------------------------------");
+ 
+            fread(&vendas, sizeof(VENDA), 1, pontv);
+            quantidade += 1;
+        }
+        printf("\nATUALMENTE O SISTEMA CONTA COM %d VENDAS REALIZADAS." , quantidade);
+        printf("\n-----------------------------------------------------");
+        getch();
+    }
+    fclose(pontv);
+}
+vazio pesquisatitulovenda()
+{
+    setlocale(LC_ALL, "Português");
+    char titulobusca[100];
+    int n = 0;
+    int quantidade = 0;
+    int codigoset = 0;
+    totallivro flutuante = 0;
+ 
+    LIVRO livros;
+ ARQUIVO *pontlivro;
+ 
+    VENDA vendas;
+ ARQUIVO *pontvenda;
+ 
+    sistema("cls");
+    printf("\n-----------------------------------------------------");
+    printf(\n| PESQUISA |");
+    printf("\n-----------------------------------------------------");
+ 
+    pontvenda = fopen("vendas.txt", "r");
+    se (pontvenda != NULL)
+    {
+        printf("\nDIGITE O TÍTULO DO LIVRO: ");
+        fica(titulobusca);
+        fflush(stdin);
+ 
+        pontlivro = fopen("livros.txt", "r");
+        fread(&livros, sizeof(LIVRO), 1, pontlivro);
+        enquanto(! feof(pontlivro))
+        {
+            se (strcmp(livros. titulo, titulobusca) != 0)
+            {
+                fread(&livros, sizeof(LIVRO), 1, pontlivro);
+                se(feof(pontlivro))
+                {
+                    sistema("cls");
+                    printf("\n-----------------------------------------------------");
+                    printf(\n| LIVRO NÃO ENCONTRADO |");
+                    printf("\n-----------------------------------------------------");
+                    getch();
+                }
+            }
+            Mais
+            {
+ n = livros. codigo;
+                fread(&vendas, sizeof(VENDA), 1, pontvenda);
+                enquanto(! feof(pontvenda))
+                {
+                    se (n != vendas. cod_livro)
+                    {
+                        fread(&vendas, sizeof(VENDA), 1, pontvenda);
+ 
+                        se(feof(pontvenda))
+                        {
+                            sistema("cls");
+                            printf("\n-----------------------------------------------------");
+                            printf(\n| NENHUMA VENDA ENCONTRADA |");
+                            printf("\n-----------------------------------------------------");
+                            getch();
+                            Retorno;
+                        }
+                    }
+                    Mais
+                    {
+                        sistema("cls");
+                        printf("\n-----------------------------------------------------");
+                        printf(\n| EXIBIÇÃO DOS LIVROS |");
+                        printf("\n-----------------------------------------------------");
+ 
+                        enquanto((( ! feof(pontvenda)&&(n==vendas. cod_livro))
+                        {
+                            printf("\nCÓDIGO DA VENDA: %0,5d",vendas.  cod_venda);
+                            printf("\nCÓDIGO DO LIVRO: %0,5d",vendas.  cod_livro);
+                            printf("\nQUANTIDADE: %d",vendas.  quantidade);
+                            printf("\nDATA DA VENDA: %s",vendas.  dados);
+                            printf("\nVALOR DA VENDA: R$%.2f",vendas.  valor_total);
+                            printf("\n-----------------------------------------------------");
+                            quantidade += 1;
+ totallivro += vendas. valor_total;
+                            fread(&vendas, sizeof(VENDA), 1, pontvenda);
+                        }
+                        printf("\nESTE LIVRO POSSUI %d VENDAS REALIZADAS TOTALIZANDO R$%.2f", quantidade, totallivro);
+                        printf("\n-----------------------------------------------------");
+                        getch();
+                        Retorno;
+                    }
+                }
+            }
+        }
+    }
+    Mais
+    {
+        sistema("cls");
+        printf("\n-----------------------------------------------------");
+        printf(\n| ERRO: NENHUMA VENDA REGISTRADA |");
+        printf("\n-----------------------------------------------------");
+        getch();
+        retorno 0;
+    }
+ 
+    fclose(pontlivro);
+    fclose(pontvenda);
+}
+vazio pesquisatitulo()
+{
+    setlocale(LC_ALL, "Português");
+    char titulobusca[100];
+    LIVRO livros;
+ ARQUIVO *pontlivro;
+ 
+    sistema("cls");
+    printf("\n-----------------------------------------------------");
+    printf(\n| PESQUISA |");
+    printf("\n-----------------------------------------------------");
+ 
+    pontlivro = fopen("livros.txt", "r");
+    se (pontlivro != NULL)
+    {
+        printf("\nDIGITE O TÍTULO DO LIVRO: ");
+        fica(titulobusca);
+        fflush(stdin);
+ 
+        fread(&livros, sizeof(LIVRO), 1, pontlivro);
+        enquanto(! feof(pontlivro))
+        {
+            se (strcmp(livros. titulo, titulobusca) != 0)
+            {
+                fread(&livros, sizeof(LIVRO), 1, pontlivro);
+                se(feof(pontlivro))
+                {
+                    sistema("cls");
+                    printf("\n-----------------------------------------------------");
+                    printf(\n| LIVRO NÃO ENCONTRADO |");
+                    printf("\n-----------------------------------------------------");
+                    getch();
+                }
+            }
+            Mais
+            {
+                sistema("cls");
+                printf("\n-----------------------------------------------------");
+                printf(\n| EXIBIÇÃO DOS LIVROS |");
+                printf("\n-----------------------------------------------------");
+ 
+                printf("\nCÓDIGO: %06d\n",livros.  codigo);
+                printf("TÍTULO: %s\n",livros.  titulo);
+                printf("PREÇO: R$%.2f",livros.  preco);
+                printf("\n-----------------------------------------------------");
+                getch();
+                Quebrar;
+            }
+        }
+    }
+ 
+    Mais
+    {
+        sistema("cls");
+        printf("\n-----------------------------------------------------");
+        printf(\n| ERRO: NENHUM ARQUIVO ENCONTRADO |");
+        printf("\n-----------------------------------------------------");
+        getch();
+    }
+    fclose(pontlivro);
+    getch();
+}
+registro_vendas vazio()
+{
+ ARQUIVO *pontvenda;
+    VENDA vendas;
+    pontvenda = fopen("vendas.txt", "a");
+ 
+    LIVRO livros;
+ ARQUIVO *pontlivro;
+ 
+    struct tm * tm;
+ time_t;
+ 
+    setlocale(LC_ALL, "Português");
+ 
+    int n = 0;
+    flutuar preco = 0;
+    int opcao = 0;
+ 
+    sistema("cls");
+    printf("\n-----------------------------------------------------");
+    printf(\n| REGISTRO DE VENDA |");
+    printf("\n-----------------------------------------------------");
+ 
+    pontlivro = fopen("livros.txt", "r");
+    se (pontlivro != NULL)
+    {
+ vendas. cod_venda = buscacodigovenda()+1;
+        printf("\nCÓDIGO DE VENDA: %0,5d",vendas.  cod_venda);
+        printf("\nCÓDIGO DO LIVRO: ");
+        scanf("%d", &vendas. cod_livro);
+ n = vendas. cod_livro;
+ 
+        fread(&livros, sizeof(LIVRO), 1, pontlivro);
+        enquanto(! feof(pontlivro))
+        {
+            se (n != livros. codigo)
+            {
+                fread(&livros, sizeof(LIVRO), 1, pontlivro);
+                se(feof(pontlivro))
+                {
+                    sistema("cls");
+                    printf("\n-----------------------------------------------------");
+                    printf(\n| LIVRO NÃO ENCONTRADO |");
+                    printf("\n-----------------------------------------------------");
+                    getch();
+                    fclose(pontvenda);
+                    fclose(pontlivro);
+                    Retorno;
+                }
+            }
+            Mais
+            {
+                sistema("cls");
+ preco = livros. preco;
+                printf("\n-----------------------------------------------------");
+                printf(\n| REGISTRO DE VENDA |");
+                printf("\n-----------------------------------------------------");
+                printf("\nCÓDIGO DE VENDA: %0,5d",vendas.  cod_venda);
+                printf("\nCÓDIGO DO LIVRO: %0,5d",vendas.  cod_livro);
+                printf("\nPREÇO DO LIVRO: R$.2f",livros.  preco);
+                printf("\nQUANTIDADE: ");
+                scanf("%d", &vendas. quantidade);
+                fflush(stdin);
+ 
+                tempo(et);
+                tm = localtime(&t);
+                strftime(vendas. dados, 20, "%d/%m/%y",tm);
+ 
+                printf("DATA: %s",vendas.  dados);
+ 
+ vendas. valor_total = preco * vendas. quantidade;
+                printf("\nVALOR TOTAL: R$%.2f\n",vendas.  valor_total);
+                printf(\nVOCÊ DESEJA COMPRAR ESTE LIVRO? \n1-SIM\n2-NÃO\n\n");
+                scanf("%d", &opcao);
+                switch(opcao)
+                {
+                caso 1:
+                    printf("\nVENDA CONCLUÍDA!");
+                    fwrite(&vendas, sizeof(VENDA), 1, pontvenda);
+                    getch();
+                    fclose(pontvenda);
+                    fclose(pontlivro);
+                    Retorno;
+                padrão:
+                    printf("\nVENDA CANCELADA!");
+                    getch();
+                    fclose(pontvenda);
+                    fclose(pontlivro);
+                    Retorno;
+                }
+ 
+            }
+        }
+    }
+    Mais
+    {
+        sistema("cls");
+        printf("\n-----------------------------------------------------");
+        printf(\n| ERRO: NENHUM ARQUIVO ENCONTRADO |");
+        printf("\n-----------------------------------------------------");
+    }
+    fclose(pontvenda);
+    fclose(pontlivro);
+    getch();
+}
+ 
+ 
+cadastro_livro vazio()
+{
+ ARQUIVO *pontlivro;
+    pontlivro = fopen("livros.txt", "a");
+ 
+    setlocale(LC_ALL, "Português");
+ 
+    LIVRO livros;
+    int opcao = 0;
+ 
+    sistema("cls");
+    printf("\n-----------------------------------------------------");
+    printf(\n| CADASTRO |");
+    printf("\n-----------------------------------------------------");
+ 
+ livros. codigo = buscacodigo()+1;
+    printf("\nCÓDIGO DO LIVRO: %0,5d",livros.  codigo);
+    fflush(stdin);
+    printf("\nDIGITE O TÍTULO DO LIVRO: ");
+    fica(livros. titulo);
+    printf("DIGITE O PREÇO DO LIVRO: ");
+    scanf("%f", &livros. preco);
+ 
+    printf(\nVOCÊ DESEJA CADASTRAR O LIVRO? \n1-SIM\n2-NÃO\n\n");
+    scanf("%d", &opcao);
+    switch(opcao)
+    {
+    caso 1:
+        printf("\nCADASTRO CONCLUÍDO!");
+        fwrite(&livros, sizeof(LIVRO), 1, pontlivro);
+        getch();
+        fclose(pontlivro);
+        Retorno;
+    padrão:
+        printf("\nREGISTRO APAGADO");
+        fclose(pontlivro);
+        getch();
+        Retorno;
+    }
+}
+ 
+ 
+int buscacodigo()
+{
+    LIVRO livros;
+    int q = 0;
+ 
+ ARQUIVO *pontlivro;
+    pontlivro = fopen("livros.txt", "r");
+ 
+    fread(&livros, sizeof(LIVRO), 1, pontlivro);
+    enquanto(! feof(pontlivro))
+    {
+        fread(&livros, sizeof(LIVRO), 1, pontlivro);
+        q += 1;
+    }
+    fclose(pontlivro);
+    retorno q;
+}
+int buscacodigovenda()
+{
+    VENDA vendas;
+    int q = 0;
+ 
+ ARQUIVO *pontv;
+    pontv = fopen("vendas.txt", "r");
+ 
+    fread(&vendas, sizeof(VENDA), 1, pontv);
+    enquanto(! feof(pontv))
+ 
+    {
+        fread(&vendas, sizeof(VENDA), 1, pontv);
+        q += 1;
+    }
+ 
+    fclose(pontv);
+    retorno q;
+}
+vazio mostraenu()
+{
+    setlocale(LC_ALL, "Português");
+ 
+    sistema("cls");
+    printf("\n-----------------------------------------------------");
+    printf(\n| MENU |");
+    printf("\n-----------------------------------------------------");
+    printf("\n1 - CADASTRAR");
+    printf("\n2 - MOSTRAR LIVROS");
+    printf("\n3 - PESQUISA POR TÍTULO");
+    printf("\n4 - REGISTRADOR VENDA");
+    printf("\n5 - MOSTRAR VENDAS");
+    printf("\n6 - PESQUISA VENDA POR TÍTULO");
+    printf("\n7 - PESQUISAR VENDAS POR DATA");
+    printf("\nESC - SAIR\n");
+}
+vazio pesquisadata()
+{
+ ARQUIVO *pontv;
+    VENDA vendas;
+ 
+    LIVRO livros;
+ ARQUIVO *pontlivro;
+ 
+    int dia;
+    int mes;
+    int ano;
+    dados de char [11];
+    totaldedato de flutuação = 0;
+    int quantidade = 0;
+ 
+    setlocale(LC_ALL, "Português");
+ 
+    pontv = fopen("vendas.txt", "r");
+    se (pontv == NULL)
+    {
+        sistema("cls");
+        printf("\n-----------------------------------------------------");
+        printf(\n| ERRO: NENHUMA VENDA REGISTRADA |");
+        printf("\n-----------------------------------------------------");
+        getch();
+    }
+    Mais
+    {
+ 
+        sistema("cls");
+        printf("\n-----------------------------------------------------");
+        printf(\n| PESQUISA |");
+        printf("\n-----------------------------------------------------");
+        printf("\nDigite o dia: ");
+        scanf("%d", &dia);
+ 
+        se(dia>31)
+        {
+ 
+            sistema("cls");
+            printf("\n-----------------------------------------------------");
+            printf(\n| DADOS INVÁLIDA |");
+            printf("\n-----------------------------------------------------");
+ 
+            getch();
+            Retorno;
+ 
+        }
+        Mais
+        {
+ 
+            sistema("cls");
+            printf("\n-----------------------------------------------------");
+            printf(\n| PESQUISA |");
+            printf("\n-----------------------------------------------------");
+            printf("\nDigite o mes: %0.2d/", dia);
+            scanf("%d", &mes);
+ 
+            se (mes>12)
+            {
+ 
+                sistema("cls");
+                printf("\n-----------------------------------------------------");
+                printf(\n| DADOS INVÁLIDA |");
+                printf("\n-----------------------------------------------------");
+ 
+                getch();
+                Retorno;
+ 
+            }
+ 
+            Mais
+            {
+ 
+                sistema("cls");
+                printf("\n-----------------------------------------------------");
+                printf(\n| PESQUISA |");
+                printf("\n-----------------------------------------------------");
+                printf("\nDigite o ano: %0.2d/%0.2d/", dia, mes);
+                scanf("%d", &ano);
+                se(ano>99)
+                {
+                    sistema("cls");
+                    printf("\n-----------------------------------------------------");
+                    printf(\n| DADOS INVÁLIDA |");
+                    printf("\n-----------------------------------------------------");
+ 
+                    getch();
+                    Retorno;
+                }
+                Mais
+                {
+                    snprintf(dados, 20, "%0.2d/%0.2d/%0.2d", dia, mes, ano);
+ 
+                    sistema("cls");
+                    printf("\n-----------------------------------------------------");
+                    printf(\n| PESQUISA |");
+                    printf("\n-----------------------------------------------------");
+                    printf("\n%s",dados);
+ 
+                    fread(&vendas, sizeof(VENDA), 1, pontv);
+                    enquanto(! feof(pontv))
+                    {
+                        se (strcmp(dados, vendas. dados) != 0)
+                        {
+                            fread(&vendas, sizeof(VENDA), 1, pontv);
+                            se(feof(pontv))
+                            {
+                                sistema("cls");
+                                printf("\n-----------------------------------------------------");
+                                printf(\n| NENHUMA VENDA ENCONTRADA |");
+                                printf("\n-----------------------------------------------------");
+                                getch();
+                            }
+                        }
+                        Mais
+                        {
+                            sistema("cls");
+                            printf("\n-----------------------------------------------------");
+                            printf(\n| EXIBIÇÃO DAS VENDAS |");
+                            printf("\n-----------------------------------------------------");
+ 
+                            enquanto(! feof(pontv)&(strcmp(dados, vendas. ( dados) == 0))
+                            {
+                                printf("\nCÓDIGO DA VENDA: %0,5d",vendas.  cod_venda);
+                                printf("\nCÓDIGO DO LIVRO: %0,5d",vendas.  cod_livro);
+                                printf("\nQUANTIDADE: %d",vendas.  quantidade);
+                                printf("\nDATA DA VENDA: %s",vendas.  dados);
+                                printf("\nVALOR DA VENDA: R$%.2f",vendas.  valor_total);
+                                printf("\n-----------------------------------------------------");
+                                fread(&vendas, sizeof(VENDA), 1, pontv);
+                                quantidade += 1;
+ totaldados = total dedata + vendas. valor_total;
+                            }
+                            printf("\nESTE DIA POSSUI %d VENDAS REALIZADAS E UM VALOR TOTAL DE R$%.2f." , quantidade, totaldata);
+                            printf("\n-----------------------------------------------------");
+                            getch();
+ 
+                        }
+ 
+                    }
+                }
+            }
+ 
+        }
+        fclose(pontv);
+    }
+}
+vazio mostrarlivros()
+{
+    setlocale(LC_ALL, "Português");
+ 
+    LIVRO livros;
+    int quantidade = 0;
+ 
+ ARQUIVO *pontlivro;
+    pontlivro = fopen("livros.txt", "r");
+ 
+    se (pontlivro == NULL)
+    {
+        sistema("cls");
+        printf("\n-----------------------------------------------------");
+        printf(\n| ERRO: NENHUM ARQUIVO ENCONTRADO |");
+        printf("\n-----------------------------------------------------");
+        getch();
+    }
+    Mais
+    {
+ 
+        sistema("cls");
+        printf("\n-----------------------------------------------------");
+        printf(\n| EXIBIÇÃO DOS LIVROS |");
+        printf("\n-----------------------------------------------------");
+ 
+        fread(&livros, sizeof(LIVRO), 1, pontlivro);
+        enquanto(! feof(pontlivro))
+        {
+            printf("\nCÓDIGO: %0.5d\n",livros.  codigo);
+            printf("TÍTULO: %s\n",livros.  titulo);
+            printf("PREÇO: R$%.2f",livros.  preco);
+            printf("\n-----------------------------------------------------");
+ 
+            fread(&livros, sizeof(LIVRO), 1, pontlivro);
+            quantidade += 1;
+        }
+        printf("\nATUALMENTE O SISTEMA CONTA COM %d LIVROS CADASTRADOS.". , quantidade);
+        printf("\n-----------------------------------------------------");
+        getch();
+    }
+    fclose(pontlivro);
+}
+int principal()
+{
+ 
+    setlocale(LC_ALL, "Português");
+    sistema("cor 0c");
+    char tecla = 0;
+    mostramenu();
+ 
+    enquanto (tecla!=27)
+    {
+        se (kbhit())
+        {
+            tecla = getch();
+            printf("\n%c", tecla);
+ 
+            interruptor(tecla)
+            {
+            case 13:
+                mostramenu();
+                Quebrar;
+            case 27:
+                saída(0);
+                Quebrar;
+            case 49:
+                cadastro_livro();
+                mostramenu();
+                Quebrar;
+            case 50:
+                mostrarlivros();
+                mostramenu();
+                Quebrar;
+            case 51:
+                pesquisatitulo();
+                mostramenu();
+                Quebrar;
+            case 52:
+                registro_vendas();
+                mostramenu();
+                Quebrar;
+            case 53:
+                mostravendas();
+                mostramenu();
+                Quebrar;
+            case 54:
+                pesquisatitulovenda();
+                mostramenu();
+                Quebrar;
+            case 55:
+ pesquisadados();
+                mostramenu();
+            padrão:
+                printf(" <- Opção inválida! \nPressione qualquer botão.");
+                getch();
+                mostramenu();
+                Quebrar;
+            }
+        }
+    }
+}
