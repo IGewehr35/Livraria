@@ -5,684 +5,684 @@
 #include <string.h>
 #include <conio.h>
 #include <time.h>
- 
-struct typedef
+
+typedef struct
 {
     int codigo;
     char titulo[100];
-    flutuar preco;
- 
+    float preco;
+
 } LIVRO;
- 
-struct typedef
+
+typedef struct
 {
     int cod_venda;
     int cod_livro;
-    dados de char [11];
+    char data[11];
     int quantidade;
-    flutuar valor_total;
- 
+    float valor_total;
+
 } VENDA;
- 
-vazio mostravendas()
+
+void mostravendas()
 {
-    setlocale(LC_ALL, "Português");
- 
+    setlocale(LC_ALL, "Portuguese");
+
     VENDA vendas;
     int quantidade = 0;
- 
- ARQUIVO *pontv;
+
+    FILE *pontv;
     pontv = fopen("vendas.txt", "r");
- 
-    se (pontv == NULL)
+
+    if (pontv == NULL)
     {
-        sistema("cls");
+        system("cls");
         printf("\n-----------------------------------------------------");
-        printf(\n| ERRO: NENHUMA VENDA REGISTRADA |");
+        printf("\n|            ERRO: NENHUMA VENDA REGISTRADA         |");
         printf("\n-----------------------------------------------------");
         getch();
     }
-    Mais
+    else
     {
-        sistema("cls");
+        system("cls");
         printf("\n-----------------------------------------------------");
-        printf(\n| EXIBIÇÃO DAS VENDAS |");
+        printf("\n|                 EXIBIÇÃO DAS VENDAS               |");
         printf("\n-----------------------------------------------------");
- 
+
         fread(&vendas, sizeof(VENDA), 1, pontv);
-        enquanto(! feof(pontv))
+        while(!feof(pontv))
         {
-            printf("\nCÓDIGO DA VENDA: %0,5d",vendas.  cod_venda);
-            printf("\nCÓDIGO DO LIVRO: %0,5d",vendas.  cod_livro);
-            printf("\nQUANTIDADE: %d",vendas.  quantidade);
-            printf("\nDATA DA VENDA: %s",vendas.  dados);
-            printf("\nVALOR DA VENDA: R$%.2f",vendas.  valor_total);
- 
+            printf("\nCÓDIGO DA VENDA: %0.5d", vendas.cod_venda);
+            printf("\nCÓDIGO DO LIVRO: %0.5d", vendas.cod_livro);
+            printf("\nQUANTIDADE: %d", vendas.quantidade);
+            printf("\nDATA DA VENDA: %s", vendas.data);
+            printf("\nVALOR DA VENDA: R$%.2f", vendas.valor_total);
+
             printf("\n-----------------------------------------------------");
- 
+
             fread(&vendas, sizeof(VENDA), 1, pontv);
             quantidade += 1;
         }
-        printf("\nATUALMENTE O SISTEMA CONTA COM %d VENDAS REALIZADAS." , quantidade);
+        printf("\nATUALMENTE O SISTEMA CONTA COM %d VENDAS REALIZADAS.", quantidade);
         printf("\n-----------------------------------------------------");
         getch();
     }
     fclose(pontv);
 }
-vazio pesquisatitulovenda()
+void pesquisatitulovenda()
 {
-    setlocale(LC_ALL, "Português");
+    setlocale(LC_ALL, "Portuguese");
     char titulobusca[100];
     int n = 0;
     int quantidade = 0;
     int codigoset = 0;
-    totallivro flutuante = 0;
- 
+    float totallivro = 0;
+
     LIVRO livros;
- ARQUIVO *pontlivro;
- 
+    FILE *pontlivro;
+
     VENDA vendas;
- ARQUIVO *pontvenda;
- 
-    sistema("cls");
+    FILE *pontvenda;
+
+    system("cls");
     printf("\n-----------------------------------------------------");
-    printf(\n| PESQUISA |");
+    printf("\n|                      PESQUISA                     |");
     printf("\n-----------------------------------------------------");
- 
+
     pontvenda = fopen("vendas.txt", "r");
-    se (pontvenda != NULL)
+    if (pontvenda != NULL)
     {
         printf("\nDIGITE O TÍTULO DO LIVRO: ");
-        fica(titulobusca);
+        gets(titulobusca);
         fflush(stdin);
- 
+
         pontlivro = fopen("livros.txt", "r");
         fread(&livros, sizeof(LIVRO), 1, pontlivro);
-        enquanto(! feof(pontlivro))
+        while(!feof(pontlivro))
         {
-            se (strcmp(livros. titulo, titulobusca) != 0)
+            if (strcmp(livros.titulo, titulobusca) != 0)
             {
                 fread(&livros, sizeof(LIVRO), 1, pontlivro);
-                se(feof(pontlivro))
+                if(feof(pontlivro))
                 {
-                    sistema("cls");
+                    system("cls");
                     printf("\n-----------------------------------------------------");
-                    printf(\n| LIVRO NÃO ENCONTRADO |");
+                    printf("\n|                LIVRO NÃO ENCONTRADO               |");
                     printf("\n-----------------------------------------------------");
                     getch();
                 }
             }
-            Mais
+            else
             {
- n = livros. codigo;
+                n = livros.codigo;
                 fread(&vendas, sizeof(VENDA), 1, pontvenda);
-                enquanto(! feof(pontvenda))
+                while(!feof(pontvenda))
                 {
-                    se (n != vendas. cod_livro)
+                    if (n != vendas.cod_livro)
                     {
                         fread(&vendas, sizeof(VENDA), 1, pontvenda);
- 
-                        se(feof(pontvenda))
+
+                        if(feof(pontvenda))
                         {
-                            sistema("cls");
+                            system("cls");
                             printf("\n-----------------------------------------------------");
-                            printf(\n| NENHUMA VENDA ENCONTRADA |");
+                            printf("\n|              NENHUMA VENDA ENCONTRADA             |");
                             printf("\n-----------------------------------------------------");
                             getch();
-                            Retorno;
+                            return;
                         }
                     }
-                    Mais
+                    else
                     {
-                        sistema("cls");
+                        system("cls");
                         printf("\n-----------------------------------------------------");
-                        printf(\n| EXIBIÇÃO DOS LIVROS |");
+                        printf("\n|                 EXIBIÇÃO DOS LIVROS               |");
                         printf("\n-----------------------------------------------------");
- 
-                        enquanto((( ! feof(pontvenda)&&(n==vendas. cod_livro))
+
+                        while((!feof(pontvenda))&&(n==vendas.cod_livro))
                         {
-                            printf("\nCÓDIGO DA VENDA: %0,5d",vendas.  cod_venda);
-                            printf("\nCÓDIGO DO LIVRO: %0,5d",vendas.  cod_livro);
-                            printf("\nQUANTIDADE: %d",vendas.  quantidade);
-                            printf("\nDATA DA VENDA: %s",vendas.  dados);
-                            printf("\nVALOR DA VENDA: R$%.2f",vendas.  valor_total);
+                            printf("\nCÓDIGO DA VENDA: %0.5d", vendas.cod_venda);
+                            printf("\nCÓDIGO DO LIVRO: %0.5d", vendas.cod_livro);
+                            printf("\nQUANTIDADE: %d", vendas.quantidade);
+                            printf("\nDATA DA VENDA: %s", vendas.data);
+                            printf("\nVALOR DA VENDA: R$%.2f", vendas.valor_total);
                             printf("\n-----------------------------------------------------");
                             quantidade += 1;
- totallivro += vendas. valor_total;
+                            totallivro += vendas.valor_total;
                             fread(&vendas, sizeof(VENDA), 1, pontvenda);
                         }
                         printf("\nESTE LIVRO POSSUI %d VENDAS REALIZADAS TOTALIZANDO R$%.2f", quantidade, totallivro);
                         printf("\n-----------------------------------------------------");
                         getch();
-                        Retorno;
+                        return;
                     }
                 }
             }
         }
     }
-    Mais
+    else
     {
-        sistema("cls");
+        system("cls");
         printf("\n-----------------------------------------------------");
-        printf(\n| ERRO: NENHUMA VENDA REGISTRADA |");
+        printf("\n|            ERRO: NENHUMA VENDA REGISTRADA         |");
         printf("\n-----------------------------------------------------");
         getch();
-        retorno 0;
+        return 0;
     }
- 
+
     fclose(pontlivro);
     fclose(pontvenda);
 }
-vazio pesquisatitulo()
+void pesquisatitulo()
 {
-    setlocale(LC_ALL, "Português");
+    setlocale(LC_ALL, "Portuguese");
     char titulobusca[100];
     LIVRO livros;
- ARQUIVO *pontlivro;
- 
-    sistema("cls");
+    FILE *pontlivro;
+
+    system("cls");
     printf("\n-----------------------------------------------------");
-    printf(\n| PESQUISA |");
+    printf("\n|                      PESQUISA                     |");
     printf("\n-----------------------------------------------------");
- 
+
     pontlivro = fopen("livros.txt", "r");
-    se (pontlivro != NULL)
+    if (pontlivro != NULL)
     {
         printf("\nDIGITE O TÍTULO DO LIVRO: ");
-        fica(titulobusca);
+        gets(titulobusca);
         fflush(stdin);
- 
+
         fread(&livros, sizeof(LIVRO), 1, pontlivro);
-        enquanto(! feof(pontlivro))
+        while(!feof(pontlivro))
         {
-            se (strcmp(livros. titulo, titulobusca) != 0)
+            if (strcmp(livros.titulo, titulobusca) != 0)
             {
                 fread(&livros, sizeof(LIVRO), 1, pontlivro);
-                se(feof(pontlivro))
+                if(feof(pontlivro))
                 {
-                    sistema("cls");
+                    system("cls");
                     printf("\n-----------------------------------------------------");
-                    printf(\n| LIVRO NÃO ENCONTRADO |");
+                    printf("\n|                LIVRO NÃO ENCONTRADO               |");
                     printf("\n-----------------------------------------------------");
                     getch();
                 }
             }
-            Mais
+            else
             {
-                sistema("cls");
+                system("cls");
                 printf("\n-----------------------------------------------------");
-                printf(\n| EXIBIÇÃO DOS LIVROS |");
+                printf("\n|                 EXIBIÇÃO DOS LIVROS               |");
                 printf("\n-----------------------------------------------------");
- 
-                printf("\nCÓDIGO: %06d\n",livros.  codigo);
-                printf("TÍTULO: %s\n",livros.  titulo);
-                printf("PREÇO: R$%.2f",livros.  preco);
+
+                printf("\nCÓDIGO: %06d\n", livros.codigo);
+                printf("TÍTULO: %s\n", livros.titulo);
+                printf("PREÇO:  R$%.2f", livros.preco);
                 printf("\n-----------------------------------------------------");
                 getch();
-                Quebrar;
+                break;
             }
         }
     }
- 
-    Mais
+
+    else
     {
-        sistema("cls");
+        system("cls");
         printf("\n-----------------------------------------------------");
-        printf(\n| ERRO: NENHUM ARQUIVO ENCONTRADO |");
+        printf("\n|           ERRO: NENHUM ARQUIVO ENCONTRADO         |");
         printf("\n-----------------------------------------------------");
         getch();
     }
     fclose(pontlivro);
     getch();
 }
-registro_vendas vazio()
+void registro_vendas()
 {
- ARQUIVO *pontvenda;
+    FILE *pontvenda;
     VENDA vendas;
     pontvenda = fopen("vendas.txt", "a");
- 
+
     LIVRO livros;
- ARQUIVO *pontlivro;
- 
+    FILE *pontlivro;
+
     struct tm * tm;
- time_t;
- 
-    setlocale(LC_ALL, "Português");
- 
+    time_t t;
+
+    setlocale(LC_ALL, "Portuguese");
+
     int n = 0;
-    flutuar preco = 0;
+    float preco = 0;
     int opcao = 0;
- 
-    sistema("cls");
+
+    system("cls");
     printf("\n-----------------------------------------------------");
-    printf(\n| REGISTRO DE VENDA |");
+    printf("\n|               REGISTRO DE VENDA                   |");
     printf("\n-----------------------------------------------------");
- 
+
     pontlivro = fopen("livros.txt", "r");
-    se (pontlivro != NULL)
+    if (pontlivro != NULL)
     {
- vendas. cod_venda = buscacodigovenda()+1;
-        printf("\nCÓDIGO DE VENDA: %0,5d",vendas.  cod_venda);
+        vendas.cod_venda = buscacodigovenda()+1;
+        printf("\nCÓDIGO DE VENDA: %0.5d", vendas.cod_venda);
         printf("\nCÓDIGO DO LIVRO: ");
-        scanf("%d", &vendas. cod_livro);
- n = vendas. cod_livro;
- 
+        scanf("%d", &vendas.cod_livro);
+        n = vendas.cod_livro;
+
         fread(&livros, sizeof(LIVRO), 1, pontlivro);
-        enquanto(! feof(pontlivro))
+        while(!feof(pontlivro))
         {
-            se (n != livros. codigo)
+            if (n != livros.codigo)
             {
                 fread(&livros, sizeof(LIVRO), 1, pontlivro);
-                se(feof(pontlivro))
+                if(feof(pontlivro))
                 {
-                    sistema("cls");
+                    system("cls");
                     printf("\n-----------------------------------------------------");
-                    printf(\n| LIVRO NÃO ENCONTRADO |");
+                    printf("\n|                LIVRO NÃO ENCONTRADO               |");
                     printf("\n-----------------------------------------------------");
                     getch();
                     fclose(pontvenda);
                     fclose(pontlivro);
-                    Retorno;
+                    return;
                 }
             }
-            Mais
+            else
             {
-                sistema("cls");
- preco = livros. preco;
+                system("cls");
+                preco = livros.preco;
                 printf("\n-----------------------------------------------------");
-                printf(\n| REGISTRO DE VENDA |");
+                printf("\n|               REGISTRO DE VENDA                   |");
                 printf("\n-----------------------------------------------------");
-                printf("\nCÓDIGO DE VENDA: %0,5d",vendas.  cod_venda);
-                printf("\nCÓDIGO DO LIVRO: %0,5d",vendas.  cod_livro);
-                printf("\nPREÇO DO LIVRO: R$.2f",livros.  preco);
+                printf("\nCÓDIGO DE VENDA: %0.5d", vendas.cod_venda);
+                printf("\nCÓDIGO DO LIVRO: %0.5d", vendas.cod_livro);
+                printf("\nPREÇO DO LIVRO: R$%.2f", livros.preco);
                 printf("\nQUANTIDADE: ");
-                scanf("%d", &vendas. quantidade);
+                scanf("%d", &vendas.quantidade);
                 fflush(stdin);
- 
-                tempo(et);
+
+                time(&t);
                 tm = localtime(&t);
-                strftime(vendas. dados, 20, "%d/%m/%y",tm);
- 
-                printf("DATA: %s",vendas.  dados);
- 
- vendas. valor_total = preco * vendas. quantidade;
-                printf("\nVALOR TOTAL: R$%.2f\n",vendas.  valor_total);
-                printf(\nVOCÊ DESEJA COMPRAR ESTE LIVRO? \n1-SIM\n2-NÃO\n\n");
+                strftime(vendas.data, 20, "%d/%m/%y", tm);
+
+                printf("DATA: %s", vendas.data);
+
+                vendas.valor_total = preco * vendas.quantidade;
+                printf("\nVALOR TOTAL:  R$%.2f\n", vendas.valor_total);
+                printf("\nVOCÊ DESEJA COMPRAR ESTE LIVRO?\n1-SIM\n2-NÃO\n\n");
                 scanf("%d", &opcao);
                 switch(opcao)
                 {
-                caso 1:
+                case 1:
                     printf("\nVENDA CONCLUÍDA!");
                     fwrite(&vendas, sizeof(VENDA), 1, pontvenda);
                     getch();
                     fclose(pontvenda);
                     fclose(pontlivro);
-                    Retorno;
-                padrão:
+                    return;
+                default:
                     printf("\nVENDA CANCELADA!");
                     getch();
                     fclose(pontvenda);
                     fclose(pontlivro);
-                    Retorno;
+                    return;
                 }
- 
+
             }
         }
     }
-    Mais
+    else
     {
-        sistema("cls");
+        system("cls");
         printf("\n-----------------------------------------------------");
-        printf(\n| ERRO: NENHUM ARQUIVO ENCONTRADO |");
+        printf("\n|           ERRO: NENHUM ARQUIVO ENCONTRADO         |");
         printf("\n-----------------------------------------------------");
     }
     fclose(pontvenda);
     fclose(pontlivro);
     getch();
 }
- 
- 
-cadastro_livro vazio()
+
+
+void cadastro_livro()
 {
- ARQUIVO *pontlivro;
+    FILE *pontlivro;
     pontlivro = fopen("livros.txt", "a");
- 
-    setlocale(LC_ALL, "Português");
- 
+
+    setlocale(LC_ALL, "Portuguese");
+
     LIVRO livros;
     int opcao = 0;
- 
-    sistema("cls");
+
+    system("cls");
     printf("\n-----------------------------------------------------");
-    printf(\n| CADASTRO |");
+    printf("\n|                      CADASTRO                     |");
     printf("\n-----------------------------------------------------");
- 
- livros. codigo = buscacodigo()+1;
-    printf("\nCÓDIGO DO LIVRO: %0,5d",livros.  codigo);
+
+    livros.codigo = buscacodigo()+1;
+    printf("\nCÓDIGO DO LIVRO: %0.5d", livros.codigo);
     fflush(stdin);
     printf("\nDIGITE O TÍTULO DO LIVRO: ");
-    fica(livros. titulo);
+    gets(livros.titulo);
     printf("DIGITE O PREÇO DO LIVRO: ");
-    scanf("%f", &livros. preco);
- 
-    printf(\nVOCÊ DESEJA CADASTRAR O LIVRO? \n1-SIM\n2-NÃO\n\n");
+    scanf("%f", &livros.preco);
+
+    printf("\nVOCÊ DESEJA CADASTRAR O LIVRO?\n1-SIM\n2-NÃO\n\n");
     scanf("%d", &opcao);
     switch(opcao)
     {
-    caso 1:
+    case 1:
         printf("\nCADASTRO CONCLUÍDO!");
         fwrite(&livros, sizeof(LIVRO), 1, pontlivro);
         getch();
         fclose(pontlivro);
-        Retorno;
-    padrão:
+        return;
+    default:
         printf("\nREGISTRO APAGADO");
         fclose(pontlivro);
         getch();
-        Retorno;
+        return;
     }
 }
- 
- 
+
+
 int buscacodigo()
 {
     LIVRO livros;
     int q = 0;
- 
- ARQUIVO *pontlivro;
+
+    FILE *pontlivro;
     pontlivro = fopen("livros.txt", "r");
- 
+
     fread(&livros, sizeof(LIVRO), 1, pontlivro);
-    enquanto(! feof(pontlivro))
+    while(!feof(pontlivro))
     {
         fread(&livros, sizeof(LIVRO), 1, pontlivro);
         q += 1;
     }
     fclose(pontlivro);
-    retorno q;
+    return q;
 }
 int buscacodigovenda()
 {
     VENDA vendas;
     int q = 0;
- 
- ARQUIVO *pontv;
+
+    FILE *pontv;
     pontv = fopen("vendas.txt", "r");
- 
+
     fread(&vendas, sizeof(VENDA), 1, pontv);
-    enquanto(! feof(pontv))
- 
+    while(!feof(pontv))
+
     {
         fread(&vendas, sizeof(VENDA), 1, pontv);
         q += 1;
     }
- 
+
     fclose(pontv);
-    retorno q;
+    return q;
 }
-vazio mostraenu()
+void mostramenu()
 {
-    setlocale(LC_ALL, "Português");
- 
-    sistema("cls");
+    setlocale(LC_ALL, "Portuguese");
+
+    system("cls");
     printf("\n-----------------------------------------------------");
-    printf(\n| MENU |");
+    printf("\n|                        MENU                       |");
     printf("\n-----------------------------------------------------");
     printf("\n1 - CADASTRAR");
     printf("\n2 - MOSTRAR LIVROS");
     printf("\n3 - PESQUISA POR TÍTULO");
-    printf("\n4 - REGISTRADOR VENDA");
+    printf("\n4 - REGISTRAR VENDA");
     printf("\n5 - MOSTRAR VENDAS");
     printf("\n6 - PESQUISA VENDA POR TÍTULO");
     printf("\n7 - PESQUISAR VENDAS POR DATA");
     printf("\nESC - SAIR\n");
 }
-vazio pesquisadata()
+void pesquisadata()
 {
- ARQUIVO *pontv;
+    FILE *pontv;
     VENDA vendas;
- 
+
     LIVRO livros;
- ARQUIVO *pontlivro;
- 
+    FILE *pontlivro;
+
     int dia;
     int mes;
     int ano;
-    dados de char [11];
-    totaldedato de flutuação = 0;
+    char data[11];
+    float totaldata = 0;
     int quantidade = 0;
- 
-    setlocale(LC_ALL, "Português");
- 
+
+    setlocale(LC_ALL, "Portuguese");
+
     pontv = fopen("vendas.txt", "r");
-    se (pontv == NULL)
+    if (pontv == NULL)
     {
-        sistema("cls");
+        system("cls");
         printf("\n-----------------------------------------------------");
-        printf(\n| ERRO: NENHUMA VENDA REGISTRADA |");
+        printf("\n|            ERRO: NENHUMA VENDA REGISTRADA         |");
         printf("\n-----------------------------------------------------");
         getch();
     }
-    Mais
+    else
     {
- 
-        sistema("cls");
+
+        system("cls");
         printf("\n-----------------------------------------------------");
-        printf(\n| PESQUISA |");
+        printf("\n|                      PESQUISA                     |");
         printf("\n-----------------------------------------------------");
         printf("\nDigite o dia: ");
         scanf("%d", &dia);
- 
-        se(dia>31)
+
+        if(dia>31)
         {
- 
-            sistema("cls");
+
+            system("cls");
             printf("\n-----------------------------------------------------");
-            printf(\n| DADOS INVÁLIDA |");
+            printf("\n|                   DATA INVÁLIDA                    |");
             printf("\n-----------------------------------------------------");
- 
+
             getch();
-            Retorno;
- 
+            return;
+
         }
-        Mais
+        else
         {
- 
-            sistema("cls");
+
+            system("cls");
             printf("\n-----------------------------------------------------");
-            printf(\n| PESQUISA |");
+            printf("\n|                      PESQUISA                     |");
             printf("\n-----------------------------------------------------");
             printf("\nDigite o mes: %0.2d/", dia);
             scanf("%d", &mes);
- 
-            se (mes>12)
+
+            if (mes>12)
             {
- 
-                sistema("cls");
+
+                system("cls");
                 printf("\n-----------------------------------------------------");
-                printf(\n| DADOS INVÁLIDA |");
+                printf("\n|                   DATA INVÁLIDA                    |");
                 printf("\n-----------------------------------------------------");
- 
+
                 getch();
-                Retorno;
- 
+                return;
+
             }
- 
-            Mais
+
+            else
             {
- 
-                sistema("cls");
+
+                system("cls");
                 printf("\n-----------------------------------------------------");
-                printf(\n| PESQUISA |");
+                printf("\n|                      PESQUISA                     |");
                 printf("\n-----------------------------------------------------");
                 printf("\nDigite o ano: %0.2d/%0.2d/", dia, mes);
                 scanf("%d", &ano);
-                se(ano>99)
+                if(ano>99)
                 {
-                    sistema("cls");
+                    system("cls");
                     printf("\n-----------------------------------------------------");
-                    printf(\n| DADOS INVÁLIDA |");
+                    printf("\n|                   DATA INVÁLIDA                    |");
                     printf("\n-----------------------------------------------------");
- 
+
                     getch();
-                    Retorno;
+                    return;
                 }
-                Mais
+                else
                 {
-                    snprintf(dados, 20, "%0.2d/%0.2d/%0.2d", dia, mes, ano);
- 
-                    sistema("cls");
+                    snprintf(data, 20, "%0.2d/%0.2d/%0.2d", dia, mes, ano);
+
+                    system("cls");
                     printf("\n-----------------------------------------------------");
-                    printf(\n| PESQUISA |");
+                    printf("\n|                      PESQUISA                     |");
                     printf("\n-----------------------------------------------------");
-                    printf("\n%s",dados);
- 
+                    printf("\n%s", data);
+
                     fread(&vendas, sizeof(VENDA), 1, pontv);
-                    enquanto(! feof(pontv))
+                    while(!feof(pontv))
                     {
-                        se (strcmp(dados, vendas. dados) != 0)
+                        if (strcmp(data, vendas.data) != 0)
                         {
                             fread(&vendas, sizeof(VENDA), 1, pontv);
-                            se(feof(pontv))
+                            if(feof(pontv))
                             {
-                                sistema("cls");
+                                system("cls");
                                 printf("\n-----------------------------------------------------");
-                                printf(\n| NENHUMA VENDA ENCONTRADA |");
+                                printf("\n|              NENHUMA VENDA ENCONTRADA             |");
                                 printf("\n-----------------------------------------------------");
                                 getch();
                             }
                         }
-                        Mais
+                        else
                         {
-                            sistema("cls");
+                            system("cls");
                             printf("\n-----------------------------------------------------");
-                            printf(\n| EXIBIÇÃO DAS VENDAS |");
+                            printf("\n|                 EXIBIÇÃO DAS VENDAS               |");
                             printf("\n-----------------------------------------------------");
- 
-                            enquanto(! feof(pontv)&(strcmp(dados, vendas. ( dados) == 0))
+
+                            while(!feof(pontv)&&(strcmp(data, vendas.data) == 0))
                             {
-                                printf("\nCÓDIGO DA VENDA: %0,5d",vendas.  cod_venda);
-                                printf("\nCÓDIGO DO LIVRO: %0,5d",vendas.  cod_livro);
-                                printf("\nQUANTIDADE: %d",vendas.  quantidade);
-                                printf("\nDATA DA VENDA: %s",vendas.  dados);
-                                printf("\nVALOR DA VENDA: R$%.2f",vendas.  valor_total);
+                                printf("\nCÓDIGO DA VENDA: %0.5d", vendas.cod_venda);
+                                printf("\nCÓDIGO DO LIVRO: %0.5d", vendas.cod_livro);
+                                printf("\nQUANTIDADE: %d", vendas.quantidade);
+                                printf("\nDATA DA VENDA: %s", vendas.data);
+                                printf("\nVALOR DA VENDA: R$%.2f", vendas.valor_total);
                                 printf("\n-----------------------------------------------------");
                                 fread(&vendas, sizeof(VENDA), 1, pontv);
                                 quantidade += 1;
- totaldados = total dedata + vendas. valor_total;
+                                totaldata = totaldata + vendas.valor_total;
                             }
-                            printf("\nESTE DIA POSSUI %d VENDAS REALIZADAS E UM VALOR TOTAL DE R$%.2f." , quantidade, totaldata);
+                            printf("\nESTE DIA POSSUI %d VENDAS REALIZADAS E UM VALOR TOTAL DE R$%.2f.", quantidade, totaldata);
                             printf("\n-----------------------------------------------------");
                             getch();
- 
+
                         }
- 
+
                     }
                 }
             }
- 
+
         }
         fclose(pontv);
     }
 }
-vazio mostrarlivros()
+void mostrarlivros()
 {
-    setlocale(LC_ALL, "Português");
- 
+    setlocale(LC_ALL, "Portuguese");
+
     LIVRO livros;
     int quantidade = 0;
- 
- ARQUIVO *pontlivro;
+
+    FILE *pontlivro;
     pontlivro = fopen("livros.txt", "r");
- 
-    se (pontlivro == NULL)
+
+    if (pontlivro == NULL)
     {
-        sistema("cls");
+        system("cls");
         printf("\n-----------------------------------------------------");
-        printf(\n| ERRO: NENHUM ARQUIVO ENCONTRADO |");
+        printf("\n|           ERRO: NENHUM ARQUIVO ENCONTRADO         |");
         printf("\n-----------------------------------------------------");
         getch();
     }
-    Mais
+    else
     {
- 
-        sistema("cls");
+
+        system("cls");
         printf("\n-----------------------------------------------------");
-        printf(\n| EXIBIÇÃO DOS LIVROS |");
+        printf("\n|                 EXIBIÇÃO DOS LIVROS               |");
         printf("\n-----------------------------------------------------");
- 
+
         fread(&livros, sizeof(LIVRO), 1, pontlivro);
-        enquanto(! feof(pontlivro))
+        while(!feof(pontlivro))
         {
-            printf("\nCÓDIGO: %0.5d\n",livros.  codigo);
-            printf("TÍTULO: %s\n",livros.  titulo);
-            printf("PREÇO: R$%.2f",livros.  preco);
+            printf("\nCÓDIGO: %0.5d\n", livros.codigo);
+            printf("TÍTULO: %s\n", livros.titulo);
+            printf("PREÇO:  R$%.2f", livros.preco);
             printf("\n-----------------------------------------------------");
- 
+
             fread(&livros, sizeof(LIVRO), 1, pontlivro);
             quantidade += 1;
         }
-        printf("\nATUALMENTE O SISTEMA CONTA COM %d LIVROS CADASTRADOS.". , quantidade);
+        printf("\nATUALMENTE O SISTEMA CONTA COM %d LIVROS CADASTRADOS.", quantidade);
         printf("\n-----------------------------------------------------");
         getch();
     }
     fclose(pontlivro);
 }
-int principal()
+int main()
 {
- 
-    setlocale(LC_ALL, "Português");
-    sistema("cor 0c");
+
+    setlocale(LC_ALL, "Portuguese");
+    system("color 0c");
     char tecla = 0;
     mostramenu();
- 
-    enquanto (tecla!=27)
+
+    while (tecla!=27)
     {
-        se (kbhit())
+        if (kbhit())
         {
             tecla = getch();
             printf("\n%c", tecla);
- 
-            interruptor(tecla)
+
+            switch(tecla)
             {
             case 13:
                 mostramenu();
-                Quebrar;
+                break;
             case 27:
-                saída(0);
-                Quebrar;
+                exit(0);
+                break;
             case 49:
                 cadastro_livro();
                 mostramenu();
-                Quebrar;
+                break;
             case 50:
                 mostrarlivros();
                 mostramenu();
-                Quebrar;
+                break;
             case 51:
                 pesquisatitulo();
                 mostramenu();
-                Quebrar;
+                break;
             case 52:
                 registro_vendas();
                 mostramenu();
-                Quebrar;
+                break;
             case 53:
                 mostravendas();
                 mostramenu();
-                Quebrar;
+                break;
             case 54:
                 pesquisatitulovenda();
                 mostramenu();
-                Quebrar;
+                break;
             case 55:
- pesquisadados();
+                pesquisadata();
                 mostramenu();
-            padrão:
-                printf(" <- Opção inválida! \nPressione qualquer botão.");
+            default:
+                printf(" <- Opção inválida!\nPressione qualquer botão.");
                 getch();
                 mostramenu();
-                Quebrar;
+                break;
             }
         }
     }
